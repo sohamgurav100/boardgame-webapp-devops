@@ -5,19 +5,14 @@ FROM maven:3.8.5-openjdk-17 AS build
 
 WORKDIR /app
 
-# Copy only Maven wrapper and pom.xml first (to leverage caching)
+# Copy only required files
 COPY pom.xml .
 COPY mvnw .
 COPY .mvn .mvn
-
-# Make mvnw executable
-RUN chmod +x mvnw
-
-# Copy the rest of the project source
 COPY src src
 
-# Build the application
-RUN ./mvnw -B clean package -DskipTests
+# Build Spring Boot project
+RUN chmod +x mvnw && ./mvnw clean package -DskipTests
 
 
 # ============================
@@ -27,11 +22,11 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-# Copy the generated JAR from previous stage
+# Copy JAR file from build stage
 COPY --from=build /app/target/*.jar app.jar
 
-# Expose the application port
+# Expose port
 EXPOSE 8080
 
-# Run the Spring Boot app
+# Start the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
