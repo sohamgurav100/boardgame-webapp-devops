@@ -1,0 +1,10 @@
+target/
+.git/
+.gitignore
+.m2/
+*.zip
+*.tar
+*.tar.gz
+*.log
+owasp-report/
+boardgame-ci-cd-pipeline/
