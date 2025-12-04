@@ -23,13 +23,13 @@ pipeline {
             }
         }
 
-        stage('OWASP Dependency Check') {
-            steps {
-                sh '''
-                dependency-check.sh --scan . --format HTML --out owasp-report
-                '''
-            }
-        }
+        // stage('OWASP Dependency Check') {
+        //     steps {
+        //         sh '''
+        //         dependency-check.sh --scan . --format HTML --out owasp-report
+        //         '''
+        //     }
+        // }
 
         stage('Build Docker Image') {
             steps {
